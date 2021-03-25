@@ -8,18 +8,29 @@ public class WordStatistics {
       // Initialize the Scanner and the HashMap of word frequencies
       Scanner SCNR = new Scanner(System.in);
       Map <String, Integer> frequencyMap = new HashMap <String, Integer>();
+      int lineCount = 0;
+      int charCount = 0;
       
       // Create a File variable based on user's input
       System.out.println("Please enter a file name:");
-      String fileName = SCNR.next();      
+      String fileName = SCNR.next();
       File file = new File (fileName);
       
-      // If the file exists, scan each unique word and update the HashMap
+      // If the file exists, count every scan each unique word and update the HashMap
       try {
         SCNR = new Scanner(file);
         
         while (SCNR.hasNext()) {
+          lineCount++;
+          SCNR.nextLine();
+        } 
+        
+        SCNR = new Scanner(file);
+        
+        while (SCNR.hasNext()) {
+          
           String word = SCNR.next();
+          charCount += word.length();
           
           if (frequencyMap.containsKey(word)) {
             int frequency = frequencyMap.get(word) + 1;
@@ -34,7 +45,11 @@ public class WordStatistics {
       catch (Exception e) {
         System.out.println("Error: file not found");
         SCNR.close();
+        System.exit(1);
       }
+      
+      System.out.printf("The line count is: %d\n", lineCount);
+      System.out.printf("The character count is: %d\n", charCount);
       
       // Print the contents of the HashMap
       for (String key : frequencyMap.keySet()) {
